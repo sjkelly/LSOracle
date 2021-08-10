@@ -19,6 +19,7 @@ endif()
 option(YOSYS_PLUGIN "compile the yosys plugin" OFF)
 option(ENABLE_GALOIS
   "Enable Galois library for hypergraph partitioning." OFF)
+option(BUILD_TESTS "build tests" ON)
 
 option(ENABLE_LIBABC
   "Enable libabc library." OFF)
@@ -65,8 +66,10 @@ if (${YOSYS_PLUGIN})
   endif()
 endif()
 
-enable_testing()
-add_executable(unit_tests tests/basic.cpp)
-target_link_libraries(unit_tests gtest_main)
-include(GoogleTest)
-gtest_discover_tests(unit_tests)
+if (${BUILD_TESTS})
+  enable_testing()
+  add_executable(unit_tests tests/basic.cpp)
+  target_link_libraries(unit_tests gtest_main)
+  include(GoogleTest)
+  gtest_discover_tests(unit_tests)
+endif()
